@@ -1,0 +1,9 @@
+.all-card{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    gap: 10px;
+
+}
