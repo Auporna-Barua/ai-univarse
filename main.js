@@ -23,17 +23,23 @@ const cardDetails = (data) => {
            <ol class="list-group list-group-numbered">
            ${
              info.features &&
-             info.features.map((feature) => `<li>${feature}</li>`).join("")
+             info.features
+               .map((feature) => `<li class="cl">${feature}</li>`)
+               .join("")
            }
               
             </ol>
           </p>
         </div>
-        <div class="card-footer">
+        <div class="card-footer bg-white d-flex justify-content-between">
         <div>
             <h5 class="card-title">${info.name}</h5>
-            
+            <div class="d-flex  align-items-center">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span class="ms-2 cl">${info.published_in} </span class="ml-4">
+            </div>
          </div>
+         <button class="btn arrow-btn"><i class="fa-solid fa-arrow-right"></i> </button>
          
 
 
