@@ -7,7 +7,7 @@ const cardDetails = (data) => {
   card.textContent = "";
 
   if (data.status) {
-    for (const info of data.data.tools) {
+    for (const info of data.data.tools.slice(0,6)) {
       console.log(info);
       const div = document.createElement("div");
       div.className = "card";

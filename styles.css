@@ -1,24 +1,35 @@
-.all-card{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: center;
-    align-items: center;
-    width: 95%;
-    gap: 10px;
-
+.all-card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  gap: 10px;
 }
-.card img{
-    width: 100%;
+.card img {
+  width: 100%;
 }
-.cl{
-    color: #585858;
+.cl {
+  color: #585858;
 }
-.arrow-btn{
-background: #FEF7F7;
-border-radius: 50%;
-width: 50px;
-height: 50px;
+.arrow-btn {
+  background: #fef7f7;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
 }
-.arrow-btn i{
-    color: #EB5757;
+.arrow-btn i {
+  color: #eb5757;
+}
+/*==============================================
+Responsive design style
+============================================================*/
+@media only screen and (max-width: 992px) {
+  .all-card {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}@media only screen and (max-width: 776px) {
+  .all-card {
+    grid-template-columns: 1fr;
+  }
 }
