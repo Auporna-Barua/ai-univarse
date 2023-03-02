@@ -1,12 +1,13 @@
 fetch(`https://openapi.programming-hero.com/api/ai/tools`)
   .then((response) => response.json())
-  .then((data) => cardInfos(data));
+  .then((data) => toolInfos(data));
 
-const cardInfos = (data) => {
+const toolInfos = (data) => {
   const card = document.getElementById("all-card");
   card.textContent = "";
 
-  if (data.status) {
+    if (data.status) {
+       error.innerHTML = "";
     for (const info of data.data.tools.slice(0,6)) {
       const div = document.createElement("div");
       div.className = "card";
@@ -49,11 +50,13 @@ const cardInfos = (data) => {
       card.appendChild(div);
     }
   } else {
+       const error = document.getElementById("error");
+       error.innerHTML = `<h2 class= "text-center text-danger">Oops!😥😪😢 There are no tools</h2>`;
   }
 };
 
-// card Details Show Here
-const cardDetails = (id) => {
+// tools Details Show Here
+const toolsDetails = (id) => {
   fetch(`https://openapi.programming-hero.com/api/ai/tool/${id}`)
     .then((response) => response.json())
     .then((data) => console.log(data.data));
