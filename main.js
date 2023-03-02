@@ -1,14 +1,13 @@
 fetch(`https://openapi.programming-hero.com/api/ai/tools`)
   .then((response) => response.json())
-  .then((data) => cardDetails(data));
+  .then((data) => cardInfos(data));
 
-const cardDetails = (data) => {
+const cardInfos = (data) => {
   const card = document.getElementById("all-card");
   card.textContent = "";
 
   if (data.status) {
     for (const info of data.data.tools.slice(0,6)) {
-      console.log(info);
       const div = document.createElement("div");
       div.className = "card";
       div.innerHTML = `
@@ -39,7 +38,9 @@ const cardDetails = (data) => {
             <span class="ms-2 cl">${info.published_in} </span class="ml-4">
             </div>
          </div>
-         <button class="btn arrow-btn"><i class="fa-solid fa-arrow-right"></i> </button>
+         <button class="btn arrow-btn" onclick="cardDetails('${
+           info.id
+         }')"><i class="fa-solid fa-arrow-right"></i> </button>
          
 
 
@@ -49,4 +50,11 @@ const cardDetails = (data) => {
     }
   } else {
   }
+};
+
+// card Details Show Here
+const cardDetails = (id) => {
+  fetch(`https://openapi.programming-hero.com/api/ai/tool/${id}`)
+    .then((response) => response.json())
+    .then((data) => console.log(data.data));
 };
