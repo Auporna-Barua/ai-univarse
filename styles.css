@@ -1,3 +1,7 @@
+:focus{
+  border: none;
+  outline: none;
+}
 .all-card {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -21,6 +25,63 @@
 .arrow-btn i {
   color: #eb5757;
 }
+
+/*============
+popup style
+======================*/
+.tool-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  gap: 10px;
+}
+.tool-left {
+  border: 1px solid #eb5757;
+  background: rgba(235, 87, 87, 0.05);
+  border-radius: 16px;
+  padding: 10px;
+}
+.tool-left h2 {
+  font-size: 25px;
+}
+.box {
+  background-color: #fff;
+  border-radius: 16px;
+  width: 130px;
+  height: 100px;
+  padding: 22px;
+  text-align: center;
+}
+.box h3 {
+  font-size: 18px;
+}
+.features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: space-between;
+  gap: 10px;
+}
+.price {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-evenly;
+  margin: 10px 0;
+}
+.tool-right {
+  border-radius: 16px;
+}
+.tool-right .card,
+.tool-right img {
+  border-radius: 16px;
+}
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 90% !important;
+   
+  }
+}
 /*==============================================
 Responsive design style
 ============================================================*/
@@ -28,7 +89,8 @@ Responsive design style
   .all-card {
     grid-template-columns: repeat(2, 1fr);
   }
-}@media only screen and (max-width: 776px) {
+}
+@media only screen and (max-width: 776px) {
   .all-card {
     grid-template-columns: 1fr;
   }
