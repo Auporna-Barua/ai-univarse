@@ -41,7 +41,7 @@ const toolInfos = (data) => {
          </div>
          <button class="btn arrow-btn" onclick="toolsDetails('${
            info.id
-         }')" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fa-solid fa-arrow-right"></i> </button>
+         }'), singleDetails()" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fa-solid fa-arrow-right"></i> </button>
          
 
 
@@ -56,50 +56,58 @@ const toolInfos = (data) => {
 };
 
 // tools Details Show Here
-const toolsDetails = (id) => {
-  fetch(`https://openapi.programming-hero.com/api/ai/tool/${id}`)
-    .then((response) => response.json())
-    .then((data) => console.log(data.data));
-  
+const toolsDetails = async (id) => {
   const details = document.getElementById("details");
-  details.innerHTML = `<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+
+  const response = await fetch(
+    `https://openapi.programming-hero.com/api/ai/tool/${id}`
+  );
+  var data = await response.json();
+  console.log(data.data);
+
+  details.innerHTML = `
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-       <div class="tool-details">
+    <div class="tool-details">
       <div class="tool-left">
         <h2>
-          ChatGPT is an AI-powered chatbot platform that uses OpenAI's GPT
-          technology to simulate human conversation.
+         ${data?.data?.description}
         </h2>
         <div class="price">
-          <div class="box">
-            <h3 style="color: #03a30a">$10/ month Basic</h3>
-          </div>
-          <div class="box"><h3 style="color: #f28927">$50/ month Pro</h3></div>
-          <div class="box">
-            <h3 style="color: #eb5757">Contact us Enterprise</h3>
-          </div>
+        ${data?.data?.pricing
+          .map(
+            (price) =>
+              ` <div class="box">
+            <h3 style="color: #03a30a">${
+              price.price == 0 ? "cost of" : price.price
+            } ${price.plan}</h3>
+          </div>`
+          )
+          .join("")}
+        
+          
         </div>
         <div class="features">
           <div>
             <h2>Features</h2>
 
-            <ul class=" ">
-              <li>A list item</li>
-              <li>A list item</li>
-              <li>A list item</li>
+            <ul>
+          
+
+
+            
+             
             </ul>
           </div>
           <div>
             <h2>Integrations</h2>
             <ul class=" ">
-              <li>A list item</li>
-              <li>A list item</li>
-              <li>A list item</li>
+              ${data?.data?.integrations
+                .map((inte) => `<li >${inte}</li>`)
+                .join("")}
             </ul>
           </div>
         </div>
@@ -107,20 +115,32 @@ const toolsDetails = (id) => {
 
       <div class="tool-right">
         <div class="card ">
-          <img src="/img/1.jpg" class="card-img-top img-fluid" alt="..." />
+          <img src="${
+            data?.data?.image_link[0]
+          }" class="card-img-top img-fluid position-relative" alt="..." />
+         ${
+           data.data.accuracy.score &&
+           `<span class="position-absolute top-0 custom-badge  badge rounded-pill bg-danger">
+   ${data?.data?.accuracy?.score}% accuracy
+  </span>`
+         }
           <div class="card-body text-center">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
+          ${data?.data?.input_output_examples
+            ?.map(
+              (result) =>
+                `<h5 class="card-title">${result.input}</h5>
+              <p class="card-text">
+                ${result.output}
+              </p>`
+            )
+            .join("")}
+          
           </div>
         </div>
       </div>
     </div>
-      </div>
-    
-    </div>
   </div>
-</div>`;
+    
+  </div>
+  `;
 };

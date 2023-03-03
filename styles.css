@@ -51,7 +51,7 @@ popup style
   border-radius: 16px;
   width: 130px;
   height: 100px;
-  padding: 22px;
+  padding: 18px;
   text-align: center;
 }
 .box h3 {
@@ -81,6 +81,11 @@ popup style
     max-width: 90% !important;
    
   }
+}
+.custom-badge{
+  transform: translate(-55%,44%)!important;
+  left: 85%;
+  height: 20px;
 }
 /*==============================================
 Responsive design style
