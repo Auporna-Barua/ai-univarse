@@ -1,8 +1,7 @@
 const toolInfos = (data, limit) => {
   const card = document.getElementById("all-card");
   card.textContent = "";
-  console.log(limit);
-  console.log(data);
+
   if (data.status) {
     error.innerHTML = "";
     for (const info of data.data.tools.slice(0, limit)) {
@@ -46,10 +45,13 @@ const toolInfos = (data, limit) => {
       card.appendChild(div);
     }
   } else {
-    const error = document.getElementById("error");
-    error.innerHTML = `<h2 class= "text-center text-danger">Oops!😥😪😢 There are no tools</h2>`;
+    const loading = document.getElementById("error");
+    loading.innerHTML = `<div class="spinner-border text-primary" style= "width: 80px; height: 80px"  role="status">
+  
+</div>`;
   }
 };
+
 window.onload = async () => {
   const response = await fetch(
     `https://openapi.programming-hero.com/api/ai/tools`
@@ -97,9 +99,13 @@ const toolsDetails = async (id) => {
           </div>`
                 )
                 .join("")
-            : Array(3).fill(` <div class="box">
+            : Array(3)
+                .fill(
+                  ` <div class="box">
             <h3 style="color: #03a30a">Free Of cost</h3>
-          </div>`).join("")
+          </div>`
+                )
+                .join("")
         }
         
           
