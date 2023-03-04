@@ -39,7 +39,6 @@ const toolInfos = (data, limit) => {
          <button class="btn arrow-btn" onclick="toolsDetails('${
            info.id
          }')" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fa-solid fa-arrow-right"></i> </button>
-         
 
 
         </div>
