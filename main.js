@@ -85,16 +85,22 @@ const toolsDetails = async (id) => {
          ${data?.data?.description}
         </h2>
         <div class="price">
-        ${data?.data?.pricing
-          .map(
-            (price) =>
-              ` <div class="box">
+        ${
+          data?.data?.pricing
+            ? data?.data?.pricing
+                .map(
+                  (price) =>
+                    ` <div class="box">
             <h3 style="color: #03a30a">${
               price.price == 0 ? "cost of" : price.price
             } ${price.plan}</h3>
           </div>`
-          )
-          .join("")}
+                )
+                .join("")
+            : Array(3).fill(` <div class="box">
+            <h3 style="color: #03a30a">Free Of cost</h3>
+          </div>`).join("")
+        }
         
           
         </div>
@@ -140,15 +146,19 @@ const toolsDetails = async (id) => {
        }
          
           <div class="card-body text-center">
-          ${data?.data?.input_output_examples
-            ?.map(
-              (result) =>
-                `<h5 class="card-title">${result.input}</h5>
+          ${
+            data?.data?.input_output_examples
+              ? data?.data?.input_output_examples
+                  ?.map(
+                    (result) =>
+                      `<h5 class="card-title">${result.input}</h5>
               <p class="card-text">
                 ${result.output}
               </p>`
-            )
-            .join("")}
+                  )
+                  .join("")
+              : `<p>No Question and answer </p>`
+          }
           
           </div>
         </div>
