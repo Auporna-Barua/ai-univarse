@@ -1,14 +1,11 @@
-fetch(`https://openapi.programming-hero.com/api/ai/tools`)
-  .then((response) => response.json())
-  .then((data) => toolInfos(data));
-
-const toolInfos = (data) => {
+const toolInfos = (data, limit) => {
   const card = document.getElementById("all-card");
   card.textContent = "";
-
+  console.log(limit);
+  console.log(data);
   if (data.status) {
     error.innerHTML = "";
-    for (const info of data.data.tools.slice(0, 6)) {
+    for (const info of data.data.tools.slice(0, limit)) {
       const div = document.createElement("div");
       div.className = "card";
       div.innerHTML = `
@@ -41,7 +38,7 @@ const toolInfos = (data) => {
          </div>
          <button class="btn arrow-btn" onclick="toolsDetails('${
            info.id
-         }'), singleDetails()" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fa-solid fa-arrow-right"></i> </button>
+         }')" data-bs-toggle="modal" data-bs-target="#detailsModal"><i class="fa-solid fa-arrow-right"></i> </button>
          
 
 
@@ -54,7 +51,20 @@ const toolInfos = (data) => {
     error.innerHTML = `<h2 class= "text-center text-danger">Oops!😥😪😢 There are no tools</h2>`;
   }
 };
+window.onload = async () => {
+  const response = await fetch(
+    `https://openapi.programming-hero.com/api/ai/tools`
+  );
+  const data = await response.json();
+  // const data = res.data;
+  let limit = 6;
+  toolInfos(data, limit);
 
+  document.getElementById("see-more").addEventListener("click", () => {
+    limit += data?.data?.tools?.length;
+    toolInfos(data, limit);
+  });
+};
 // tools Details Show Here
 const toolsDetails = async (id) => {
   const details = document.getElementById("details");
@@ -63,7 +73,6 @@ const toolsDetails = async (id) => {
     `https://openapi.programming-hero.com/api/ai/tool/${id}`
   );
   var data = await response.json();
-  console.log(data.data);
 
   details.innerHTML = `
     <div class="modal-content">
@@ -96,7 +105,9 @@ const toolsDetails = async (id) => {
 
             <ul>
           
-
+            <li>${data?.data?.features[1].feature_name}<li>
+            <li>${data?.data?.features[2].feature_name}<li>
+            <li>${data?.data?.features[3].feature_name}<li>
 
             
              
@@ -105,9 +116,13 @@ const toolsDetails = async (id) => {
           <div>
             <h2>Integrations</h2>
             <ul class=" ">
-              ${data?.data?.integrations
-                .map((inte) => `<li >${inte}</li>`)
-                .join("")}
+              ${
+                data?.data?.integrations
+                  ? data?.data?.integrations
+                      .map((inte) => `<li >${inte}</li>`)
+                      .join("")
+                  : `<p>No data found </p>`
+              }
             </ul>
           </div>
         </div>
@@ -115,15 +130,16 @@ const toolsDetails = async (id) => {
 
       <div class="tool-right">
         <div class="card ">
-          <img src="${
-            data?.data?.image_link[0]
-          }" class="card-img-top img-fluid position-relative" alt="..." />
-         ${
-           data.data.accuracy.score &&
-           `<span class="position-absolute top-0 custom-badge  badge rounded-pill bg-danger">
-   ${data?.data?.accuracy?.score}% accuracy
-  </span>`
-         }
+       ${
+         data?.data?.accuracy.score
+           ? `<img src="${data?.data?.image_link[0]}" class="card-img-top img-fluid position-relative" alt="..." />
+       
+           <span class="position-absolute top-0 custom-badge  badge rounded-pill bg-danger">
+        ${data?.data?.accuracy?.score}% accuracy
+        </span>`
+           : `<img src="${data?.data?.image_link[0]}" class="card-img-top img-fluid position-relative" alt="..." />`
+       }
+         
           <div class="card-body text-center">
           ${data?.data?.input_output_examples
             ?.map(
