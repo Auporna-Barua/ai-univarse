@@ -1,7 +1,13 @@
 const toolInfos = (data, limit) => {
+  
   const card = document.getElementById("all-card");
+  const loading = document.getElementById("loading");
   card.textContent = "";
-
+  if (!data) {
+    loading.innerHTML = `<div class="text-center">
+  
+  <div class="spinner-border text-primary" style= "width: 80px; height: 80px"  role="status"></div></div>`;
+  }
   if (data.status) {
     error.innerHTML = "";
     for (const info of data.data.tools.slice(0, limit)) {
@@ -45,10 +51,8 @@ const toolInfos = (data, limit) => {
       card.appendChild(div);
     }
   } else {
-    const loading = document.getElementById("error");
-    loading.innerHTML = `<div class="spinner-border text-primary" style= "width: 80px; height: 80px"  role="status">
-  
-</div>`;
+    const error = document.getElementById("error");
+    // error.innerHTML = `<h2 class= "text-center text-danger">Oops!😥😪😢 There are no tools</h2>`;
   }
 };
 
