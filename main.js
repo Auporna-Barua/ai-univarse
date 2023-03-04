@@ -92,7 +92,7 @@ const toolsDetails = async (id) => {
                   (price) =>
                     ` <div class="box">
             <h3 style="color: #03a30a">${
-              price.price == 0 ? "cost of" : price.price
+              price.price == 0 ? "cost of free" : price.price
             } ${price.plan}</h3>
           </div>`
                 )
